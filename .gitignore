@@ -1,0 +1,6 @@
+# dependencies
+/Backend/node_modules
+/SalesApp/node_modules
+
+# production
+/SalesApp/build
