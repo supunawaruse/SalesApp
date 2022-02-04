@@ -24,8 +24,12 @@ db.sequelize = sequelize
 db.admins = require('./adminModel')(sequelize,DataTypes)
 db.purchases = require('./purchaseModel')(sequelize,DataTypes)
 db.supplier = require('./supplierModel')(sequelize, DataTypes)
+db.product = require('./productModel')(sequelize,DataTypes)
+db.purchaseproduct = require('./purchaseproduct')(sequelize,DataTypes)
+db.customer = require('./customer')(sequelize,DataTypes)
 
-db.sequelize.sync().then(()=>{
+
+db.sequelize.sync({alter:true}).then(()=>{
     console.log('Database Synced');
 })
 
@@ -49,6 +53,15 @@ db.supplier.hasMany(db.purchases,{
 db.purchases.belongsTo(db.supplier,{
     foreignKey: 'supplier_id',
     as:'supplier'
+})
+
+//relationship between product and purchase
+db.purchases.belongsToMany(db.product,{
+    through: db.purchaseproduct,
+})
+
+db.product.belongsToMany(db.purchases,{
+    through: db.purchaseproduct,
 })
 
 

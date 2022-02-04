@@ -1,10 +1,11 @@
 const db = require('../models/index')
 
 const Supplier = db.supplier
+const Purchase = db.purchases
 
 const getAllSuppliers = async (req, res) => {
     try {
-        const supplier = await Supplier.findAll();
+        const supplier = await Supplier.findAll()
         res.status(200).send(supplier)
     } catch (error) {
         console.log(error);
@@ -17,6 +18,30 @@ const getSupplierById = async (req, res) => {
         const supplier = await Supplier.findOne({where:{id:id}})
         if(supplier){
             res.status(200).send(supplier)
+        }else{
+            res.status(404).send({
+                message:'Supplier Not Found'
+            })
+            throw new Error("Supplier Not Found")
+        }
+        
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const getSupplierPuchases = async (req, res) => {
+    try {
+        const id = req.params.id
+        const data = await Supplier.findOne({
+            include:[{
+                model:Purchase,
+                as:'purchase'
+            }],
+            where:{id:id}
+        })
+        if(data){
+            res.status(200).send(data)
         }else{
             res.status(404).send({
                 message:'Supplier Not Found'
@@ -89,4 +114,4 @@ const deleteSupplier = async (req, res) => {
     }
 }
 
-module.exports = {getAllSuppliers,addSupplier,getSupplierById,deleteSupplier,updateSupplier}
+module.exports = {getAllSuppliers,addSupplier,getSupplierById,deleteSupplier,updateSupplier,getSupplierPuchases}
