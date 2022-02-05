@@ -1,6 +1,8 @@
+const { stock } = require('../models/index')
 const db = require('../models/index')
 
 const Product = db.product
+const Stock = db.stock
 
 const getAllProducts = async (req,res) =>{
     try {
@@ -28,6 +30,31 @@ const getAllProductById = async (req,res) =>{
         console.log(error);
     }
 }
+
+const getProductStock = async (req, res) => {
+    try {
+        const id = req.params.id
+        const data = await Product.findOne({
+            include:[{
+                model:Stock,
+                as:'stock'
+            }],
+            where:{id:id}
+        })
+        if(data){
+            res.status(200).send(data)
+        }else{
+            res.status(404).send({
+                message:'Product Not Found'
+            })
+            throw new Error("Product Not Found")
+        }
+        
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 const addProduct = async (req, res) =>{
     const data = {
@@ -91,5 +118,6 @@ module.exports = {
     getAllProductById,
     addProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    getProductStock
 }

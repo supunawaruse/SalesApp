@@ -27,6 +27,9 @@ db.supplier = require('./supplierModel')(sequelize, DataTypes)
 db.product = require('./productModel')(sequelize,DataTypes)
 db.purchaseproduct = require('./purchaseproduct')(sequelize,DataTypes)
 db.customer = require('./customer')(sequelize,DataTypes)
+db.sale = require('./salesModel')(sequelize,DataTypes)
+db.saleproduct = require('./saleproduct')(sequelize,DataTypes)
+db.stock = require('./stockModel')(sequelize,DataTypes)
 
 
 db.sequelize.sync({alter:true}).then(()=>{
@@ -62,6 +65,29 @@ db.purchases.belongsToMany(db.product,{
 
 db.product.belongsToMany(db.purchases,{
     through: db.purchaseproduct,
+})
+
+// relationship between sale and customer
+db.customer.hasMany(db.sale,{
+    foreignKey: 'customer_id',
+    as:'sale'
+})
+
+db.sale.belongsTo(db.customer,{
+    foreignKey: 'customer_id',
+    as:'customer'
+})
+
+
+//relationship between product and stock
+db.product.hasMany(db.stock,{
+    foreignKey: 'product_id',
+    as:'stock'
+})
+
+db.stock.belongsTo(db.product,{
+    foreignKey: 'product_id',
+    as:'product'
 })
 
 
