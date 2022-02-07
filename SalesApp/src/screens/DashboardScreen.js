@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 
-const HomeScreen = () => {
+const DashboardScreen = () => {
   return (
     <View>
-      <Text>Home Screen</Text>
+      <Text>Dashboard Screen</Text>
     </View>
   );
 };
 
-export default HomeScreen;
+export default DashboardScreen;
