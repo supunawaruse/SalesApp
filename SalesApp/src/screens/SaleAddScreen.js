@@ -18,19 +18,18 @@ const SaleAddScreen = () => {
           <InputField label={'Customer'} placeholder={'Select Customer'} />
           <InputField label={'Date'} placeholder={'Enter Sales Date'}/>
 
-          <View style={{marginTop:8,paddingHorizontal:10,marginBottom:10}}>
+          <View style={{marginTop:8,paddingHorizontal:5,marginBottom:10}}>
           <Text style={{marginBottom:8}}>Products:</Text>
-          <View style={{flex:1,flexDirection:'row',paddingHorizontal:10,marginBottom:5,borderRadius:10}}>
+          <View style={{flex:1,flexDirection:'row',paddingHorizontal:5,marginBottom:5,borderRadius:10}}>
               <View style={{flex:0.5,alignItems:'center'}}>
               <Text>Product Name</Text>
               </View>
               <View style={{flex:0.3,alignItems:'center'}}>
               <Text>Qty</Text>
               </View>
-
           </View>
-          <View style={{flex:1,flexDirection:'row',paddingHorizontal:10,marginBottom:5,borderRadius:10}}>
-              <View style={{flex:0.5,alignItems:'center',justifyContent:'center'}}>
+          <View style={{flex:1,flexDirection:'row',marginBottom:5,borderRadius:10}}>
+              <View style={{flex:0.45,alignItems:'center',justifyContent:'center'}}>
                 <TextInput
                 placeholder='Select Product'
                 placeholderTextColor='white' 

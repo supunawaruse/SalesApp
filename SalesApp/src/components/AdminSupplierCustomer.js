@@ -1,14 +1,21 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import {Card} from 'react-native-paper'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 
-const AdminSupplierCustomer = ({type}) => {
+const AdminSupplierCustomer = ({type, deleteModalCallBack,editModalCallBack}) => {
+
+    const onDelete = () =>{
+        deleteModalCallBack(true);
+    }
+
+    const onEdit = () =>{
+        editModalCallBack(true);
+    }
+   
   return (
-    <View style={{
-        backgroundColor:"#4F6367",height:80,borderRadius:10,padding:10,marginBottom:5}}>
+    <View style={{backgroundColor:"#4F6367",borderRadius:10,padding:10,marginBottom:5}}>
         <View style={{flex:1,flexDirection:'row'}}>
             <View style={{flex:0.15,borderRadius:10,padding:5,justifyContent:'center',alignItems:'center'}}>
                 <View style={{flex:1,height:50,width:50,borderRadius:5,backgroundColor:'white',alignItems:'center',justifyContent:'center'}}>
@@ -27,11 +34,11 @@ const AdminSupplierCustomer = ({type}) => {
                 <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>ContactNo: 0773677871</Text>
             </View>
             <View style={{flex:0.25,alignItems:'center',justifyContent:'center'}}>
-               <TouchableOpacity style={{paddingHorizontal:20,paddingVertical:2,backgroundColor:'#7A9E9F',borderRadius:10,marginBottom:10}}>
-                   <Text style={{fontWeight:'bold',color:'white'}}>Edit</Text>
+               <TouchableOpacity onPress={onEdit} style={{paddingHorizontal:20,paddingVertical:2,backgroundColor:'#7A9E9F',borderRadius:10,marginBottom:10}}>
+               <MaterialCommunityIcons name='account-edit' color={'white'} size={20} />
                </TouchableOpacity>
-               <TouchableOpacity style={{paddingHorizontal:20,paddingVertical:2,backgroundColor:'#FE5F55',borderRadius:10}}>
-                   <Text style={{fontWeight:'bold',color:'white'}}>Delete</Text>
+               <TouchableOpacity onPress={onDelete} style={{paddingHorizontal:20,paddingVertical:2,backgroundColor:'#FE5F55',borderRadius:10}}>
+                  <MaterialCommunityIcons name='delete' color={'white'} size={20} />
                </TouchableOpacity>
             </View>
         </View>

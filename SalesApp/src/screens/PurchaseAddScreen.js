@@ -13,7 +13,7 @@ const PurchaseAddScreen = () => {
       <ImageBackground source={require('../../assets/images/logo.png')} style={{width:220,height:220,opacity:0.2,position:'absolute',bottom:-30,right:-50}} />
       <ScrollView>  
       <Text style={{marginLeft:10,fontSize:18,fontWeight:'bold',color:'#4F6367'}}>Purchase Details</Text>
-      <Divider style={{marginLeft:10,height:3,width:110,marginBottom:20}} />
+      <Divider style={{marginLeft:10,height:3,width:135,marginBottom:20}} />
        
           <InputField label={'Supplier'} placeholder={'Select Supplier'} />
           <InputField label={'Date'} placeholder={'Enter Purchase Date'}/>
@@ -31,7 +31,7 @@ const PurchaseAddScreen = () => {
 
           </View>
           <View style={{flex:1,flexDirection:'row',paddingHorizontal:10,marginBottom:5,borderRadius:10}}>
-              <View style={{flex:0.5,alignItems:'center',justifyContent:'center'}}>
+              <View style={{flex:0.45,alignItems:'center',justifyContent:'center'}}>
                 <TextInput
                 placeholder='Select Product'
                 placeholderTextColor='white' 
