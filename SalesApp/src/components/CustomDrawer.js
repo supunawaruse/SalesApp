@@ -7,7 +7,6 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 
 const CustomDrawer = (props) => {
-    const [expanded, setExpanded] = useState(true);
     const {state, descriptors, navigation} = props;
     let lastGroup = '';
     let newGroup = true;
