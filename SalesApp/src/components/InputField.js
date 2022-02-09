@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View,TextInput} from 'react-native';
 import React from 'react';
 
-const InputField = ({as,label,placeholder,isModal}) => {
+const InputField = ({label,placeholder,isModal,value,onChangeText}) => {
   return (
     <View style={ {paddingHorizontal:10,marginBottom:15,}}>
      
@@ -9,6 +9,8 @@ const InputField = ({as,label,placeholder,isModal}) => {
        <Text style={isModal ? {color:'white',marginBottom:15}:{color:'#4F6367',marginBottom:15}}>{label}: </Text>
        <View style={{paddingHorizontal:10}}>
         <TextInput
+        onChangeText={onChangeText}
+        value={value}
         placeholder={placeholder}
         placeholderTextColor={'#E7E7E7'}
         style={{

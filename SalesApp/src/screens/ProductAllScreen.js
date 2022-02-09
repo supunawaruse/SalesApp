@@ -32,11 +32,15 @@ const ProductAllScreen = () => {
     </Portal>
 
     <Portal>
+  
       <Modal visible={visibleEdit} onDismiss={hideEditModal} contentContainerStyle={{backgroundColor: '#4F6367', padding: 18, margin:40,borderRadius:10}}>
+       
         <Text style={{fontSize:16,fontWeight:'bold',marginBottom:10,color:'white'}}>Edit Product</Text>
         <InputField label={'Name'} placeholder={'Enter Name'} isModal={true} />
-        <InputField label={'Phone Number'} placeholder={'Enter phone number'} isModal={true} />
+        <InputField label={'Category'} placeholder={'Enter category'} isModal={true} />
+        <InputField label={'Buying Price'} placeholder={'Enter buying price'} isModal={true} />
         <TouchableOpacity onPress={hideDeleteModal} style={{marginTop:10,backgroundColor:'#7A9E9F',padding:10,paddingHorizontal:20,borderRadius:10,alignItems:'center',alignSelf:'center'}}><Text  style={{color:'white',fontWeight:'bold'}}>Save</Text></TouchableOpacity>
+       
       </Modal>
     </Portal>
 

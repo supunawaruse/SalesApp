@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View,ScrollView,TouchableWithoutFeedback, Keyboard, TextInput } from 'react-native';
-import React from 'react';
+import React,{useEffect} from 'react';
 import {Divider} from 'react-native-paper'
 import SalePurchase from '../components/SalePurchase';
 import ToBePaid from '../components/ToBePaid';
 
 const DashboardScreen = () => {
+  
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
     <ScrollView>

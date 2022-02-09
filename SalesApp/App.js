@@ -31,7 +31,7 @@ const App = () => {
 
   return (
    <NavigationContainer>
-      <Drawer.Navigator initialRouteName='Dashboard' drawerContent={props => <CustomDrawer {...props}/>} screenOptions={{headerTitleAlign:"center",headerTitleStyle:{color:'#4F6367'},headerStyle:{height:70}}} >
+      <Drawer.Navigator initialRouteName='AddminAll' drawerContent={props => <CustomDrawer {...props}/>} screenOptions={{headerTitleAlign:"center",headerTitleStyle:{color:'#4F6367'},headerStyle:{height:70}}} >
         <Drawer.Screen name="Dashboard" component={DashboardScreen} options={{drawerLabel:'Dashboard',groupName: 'Dashboard',headerTitle:"Dashboard"}}/>
         <Drawer.Screen name="AddminAll" component={AdminAllScreen} options={{drawerLabel:'All Admins', groupName: 'Admins',headerTitle:"Admins Details"}}/>
         <Drawer.Screen name="AddminAdd" component={AdminAddScreen} options={{drawerLabel:'Add Admin', groupName: 'Admins',headerTitle:"Add Admin"}}/>

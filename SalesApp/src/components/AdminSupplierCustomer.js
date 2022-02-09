@@ -4,14 +4,16 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 
-const AdminSupplierCustomer = ({type, deleteModalCallBack,editModalCallBack}) => {
+const AdminSupplierCustomer = ({type, deleteModalCallBack,editModalCallBack,data,selectItemCallBack}) => {
 
     const onDelete = () =>{
         deleteModalCallBack(true);
+        selectItemCallBack(data);
     }
 
     const onEdit = () =>{
         editModalCallBack(true);
+        selectItemCallBack(data);
     }
    
   return (
@@ -23,15 +25,15 @@ const AdminSupplierCustomer = ({type, deleteModalCallBack,editModalCallBack}) =>
                 </View>
             </View> 
             <View style={{flex:0.6,justifyContent:'center',paddingLeft:5}}>
-                <Text style={{fontWeight:'bold',color:'white',letterSpacing:1.5}}>Nipunika Gunasinghe</Text>
+                <Text style={{fontWeight:'bold',color:'white',letterSpacing:1.5}}>{data.name}</Text>
                 {
                     type === 'stock' ? (
                         <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>Id: 1  Stock Place:Home</Text>
                     ):(
-                        <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>Id: 1</Text>
+                        <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>Id: {data.id}</Text>
                     )
                 }
-                <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>ContactNo: 0773677871</Text>
+                <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>ContactNo: {data.phone}</Text>
             </View>
             <View style={{flex:0.25,alignItems:'center',justifyContent:'center'}}>
                <TouchableOpacity onPress={onEdit} style={{paddingHorizontal:20,paddingVertical:2,backgroundColor:'#7A9E9F',borderRadius:10,marginBottom:10}}>
