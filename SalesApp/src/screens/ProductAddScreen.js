@@ -1,11 +1,39 @@
 import { StyleSheet, Text, View, TouchableWithoutFeedback,Keyboard,ScrollView,SafeAreaView,ImageBackground} from 'react-native';
-import React from 'react';
+import React,{useState} from 'react';
 import {Divider} from 'react-native-paper'
 import InputField from '../components/InputField';
 import Button from '../components/Button';
-
+import axios from 'axios';
 
 const ProductAddScreen = () => {
+
+  const [addDetails,setAddDetails] = useState({
+    name:'',
+    category:'',
+    buyingPrice:''
+  })
+
+  const handleChange = (text, name) => {
+    setAddDetails({
+      ...addDetails,
+      [name]: text,
+    });
+  };
+
+  const onAdd = async() => {
+    try {
+     await axios.post('http://192.168.1.10:8080/api/product/',{
+        name:addDetails.name,
+        category:addDetails.category,
+        buyingPrice:addDetails.buyingPrice
+      })
+      setAddDetails({name:'',category:'',buyingPrice:''})
+      console.log('Successfully added')
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
      
@@ -15,10 +43,10 @@ const ProductAddScreen = () => {
       <Text style={{marginLeft:10,fontSize:18,fontWeight:'bold',color:'#4F6367'}}>Product Details</Text>
       <Divider style={{marginLeft:10,height:3,width:140,marginBottom:20}} />
        
-          <InputField label={'Name'} placeholder={'Enter Name'} />
-          <InputField label={'Category'} placeholder={'Enter Category'}/>
-          <InputField label={'Buying Price'} placeholder={'Enter Buying Price'}/>
-          <Button buttonText={'Add Product'} />
+          <InputField label={'Name'} placeholder={'Enter Name'} value={addDetails.name}  onChangeText={(text) => handleChange(text,'name')}/>
+          <InputField label={'Category'} placeholder={'Enter Category'} value={addDetails.category}  onChangeText={(text) => handleChange(text,'category')} />
+          <InputField label={'Buying Price'} placeholder={'Enter Buying Price'} value={addDetails.buyingPrice}  onChangeText={(text) => handleChange(text,'buyingPrice')} />
+          <Button onPress={onAdd} buttonText={'Add Product'} />
       
       </ScrollView>
     </SafeAreaView>

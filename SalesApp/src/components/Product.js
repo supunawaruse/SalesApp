@@ -4,15 +4,17 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
-const Product = ({deleteModalCallBack,editModalCallBack}) => {
+const Product = ({type, deleteModalCallBack,editModalCallBack,data,selectItemCallBack}) => {
 
     
     const onDelete = () =>{
         deleteModalCallBack(true);
+        selectItemCallBack(data);
     }
 
     const onEdit = () =>{
         editModalCallBack(true);
+        selectItemCallBack(data);
     }
    
   return (
@@ -25,9 +27,9 @@ const Product = ({deleteModalCallBack,editModalCallBack}) => {
                 </View>
             </View> 
             <View style={{flex:0.6,justifyContent:'center',paddingLeft:5}}>
-                <Text style={{fontWeight:'bold',color:'white',letterSpacing:1.5}}>Blue-Flex Face Mask</Text>
-                <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>Id: 1  Category: Child Mask</Text>
-                <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>Buying Price: 4.50</Text>
+                <Text style={{fontWeight:'bold',color:'white',letterSpacing:1.5}}>{data.name}</Text>
+                <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>Id: {data.id}  Category: {data.category}</Text>
+                <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>Buying Price: {data.buyingPrice}</Text>
             </View>
             <View style={{flex:0.25,alignItems:'center',justifyContent:'center'}}>
                <TouchableOpacity onPress={onEdit} style={{paddingHorizontal:20,paddingVertical:2,backgroundColor:'#7A9E9F',borderRadius:10,marginBottom:10}}>
@@ -41,8 +43,13 @@ const Product = ({deleteModalCallBack,editModalCallBack}) => {
         <View style={{flex:1,marginTop:5,paddingHorizontal:10}}> 
             <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13,fontWeight:'bold'}}>Stocks:</Text>
             <View style={{paddingHorizontal:10}}>
-                <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>Place: Home   Quantity: 200</Text>
-                <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>Place: Home   Quantity:200</Text>
+                {
+                    data.stock.length > 0 ? data.stock.map((item) => (
+                        <Text key={item.id} style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>Place: {item.stockPlace}   Quantity: {item.stockQuantity}</Text>
+                    )):(
+                        <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>No Stock Available</Text>
+                    )
+                }
             </View>
         </View>
     </View>

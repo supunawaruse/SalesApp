@@ -6,6 +6,20 @@ const Stock = db.stock
 
 const getAllProducts = async (req,res) =>{
     try {
+        const products = await Product.findAll({
+            include:[{
+                model:Stock,
+                as:'stock'
+            }],
+        })
+        res.status(200).send(products)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const getAllProductsWithoutStock = async (req,res) =>{
+    try {
         const products = await Product.findAll()
         res.status(200).send(products)
     } catch (error) {
@@ -33,11 +47,12 @@ const getAllProductById = async (req,res) =>{
 
 const getProductStock = async (req, res) => {
     try {
+        
         const id = req.params.id
-        const data = await Product.findOne({
+        const data = await Stock.findAll({
             include:[{
-                model:Stock,
-                as:'stock'
+                model:Product,
+                as:'product'
             }],
             where:{id:id}
         })
@@ -119,5 +134,6 @@ module.exports = {
     addProduct,
     updateProduct,
     deleteProduct,
-    getProductStock
+    getProductStock,
+    getAllProductsWithoutStock
 }

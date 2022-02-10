@@ -1,11 +1,42 @@
 const db = require('../models/index')
 
 const Stock = db.stock
+const Product = db.product
 
 const getAllStocks = async (req, res) => {
     try {
-        const stock = await Stock.findAll();
+        const stock = await Stock.findAll({
+            include:[{
+                model:Product,
+                as:'product'
+            }],
+        });
         res.status(200).send(stock)
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const getStockByProductId = async (req, res) => {
+    try {
+        
+        const id = req.params.id
+        const data = await Stock.findAll({
+            include:[{
+                model:Product,
+                as:'product'
+            }],
+            where:{product_id:id}
+        })
+        if(data){
+            res.status(200).send(data)
+        }else{
+            res.status(404).send({
+                message:'Product Not Found'
+            })
+            throw new Error("Product Not Found")
+        }
+        
     } catch (error) {
         console.log(error);
     }
@@ -89,4 +120,4 @@ const deleteStock = async (req, res) => {
     }
 }
 
-module.exports = {getAllStocks,addStock,getStockById,updateStock,deleteStock}
+module.exports = {getAllStocks,addStock,getStockById,updateStock,deleteStock,getStockByProductId}

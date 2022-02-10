@@ -25,15 +25,23 @@ const AdminSupplierCustomer = ({type, deleteModalCallBack,editModalCallBack,data
                 </View>
             </View> 
             <View style={{flex:0.6,justifyContent:'center',paddingLeft:5}}>
-                <Text style={{fontWeight:'bold',color:'white',letterSpacing:1.5}}>{data.name}</Text>
+              
                 {
                     type === 'stock' ? (
-                        <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>Id: 1  Stock Place:Home</Text>
-                    ):(
+                        <>
+                        <Text style={{fontWeight:'bold',color:'white',letterSpacing:1.5}}>{data?.product.name}</Text> 
                         <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>Id: {data.id}</Text>
+                        <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>Stock Place: {data.stockPlace}</Text>
+                        <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>Stock Quantity: {data.stockQuantity}</Text>
+                        </>
+                    ):(
+                        <>
+                        <Text style={{fontWeight:'bold',color:'white',letterSpacing:1.5}}>{data.name}</Text>
+                        <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>Id: {data.id}</Text>
+                        <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>ContactNo: {data.phone}</Text>
+                        </>
                     )
                 }
-                <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>ContactNo: {data.phone}</Text>
             </View>
             <View style={{flex:0.25,alignItems:'center',justifyContent:'center'}}>
                <TouchableOpacity onPress={onEdit} style={{paddingHorizontal:20,paddingVertical:2,backgroundColor:'#7A9E9F',borderRadius:10,marginBottom:10}}>
