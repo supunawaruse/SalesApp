@@ -7,7 +7,6 @@ import { getAllProductsWithoutStock } from '../services/ProductsServices';
 import axios from 'axios';
 import { useIsFocused } from "@react-navigation/native";
 import { Select } from "native-base";
-import { Item } from 'react-native-paper/lib/typescript/components/List/List';
 
 const StockAddScreen = () => {
 

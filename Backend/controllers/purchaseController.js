@@ -54,18 +54,13 @@ const addPurchase = async (req, res) => {
         supplier_id:req.body.supplier_id,
         purchaseDate: req.body.purchaseDate,
     }
-
-    const products = [{id:1,name:'Creation Flex Mask', buyingPrice:3.5, category:'Child Mask'}]
+    const products = req.body.products;
 
     try {
-       const purchase = await Purchase.create(data)
-       products.forEach( async (item) =>{
-            const purchaseProductData = {
-                quantity:10,
-                purchaseId:purchase.id,
-                productId:item.id
-            }
-          await PurchaseProducts.create(purchaseProductData)
+      const purchase = await Purchase.create(data)
+       products.forEach( async (item) => {
+        const product = await Products.findOne({where:{id:item.id}})
+        await purchase.addProduct(product, { through: { quantity: item.quantity } })
        })
        res.status(201).send(purchase)
     } catch (error) {
