@@ -21,6 +21,7 @@ const SaleAddScreen = () => {
   const [addDetails,setAddDetails] = useState({quantity:'',product_id:'',customer_id:'',toBePaid:''})
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [addBtnDisable, setAddBtnDisable] = useState(true)
+  const [errorMsg,setErrorMsg] = useState('')
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -42,6 +43,7 @@ const SaleAddScreen = () => {
       getAllProductsToScreen()
     }else{
       setAddDetails({})
+      setErrorMsg('')
       setSaleProductList([])
     }
     return () => mounted = false;
@@ -79,11 +81,18 @@ const SaleAddScreen = () => {
 
   const addToSaleList = () =>{
     const item = productList.filter((item)=> item.id === addDetails.product_id)[0]
+
+    if(item.stock.stockQuantity >= addDetails?.quantity){
     const data = {item,quantity:addDetails.quantity}
     setSaleProductList([...saleProductList,data])
 
     const newProductList = productList.filter((item) => item.id !== addDetails.product_id)
     setProductList(newProductList)
+    setErrorMsg('')
+    }else{
+      setErrorMsg('Not Available stock from that product')
+    }
+   
   }
 
   const calcualteTotal = () => {
@@ -122,6 +131,7 @@ const SaleAddScreen = () => {
       setAddDetails({quantity:'',product_id:'',customer_id:'',toBePaid:''})
       setProductList(allProductList)
       setSaleProductList([])
+      setErrorMsg('')
     } catch (error) {
       console.log(error)
     }
@@ -131,6 +141,7 @@ const SaleAddScreen = () => {
     setProductList(allProductList)
     setSaleProductList([])
     setAddDetails({quantity:'',product_id:''})
+    setErrorMsg('')
   }
   
 
@@ -140,7 +151,7 @@ const SaleAddScreen = () => {
     <SafeAreaView style={{flex:1,padding:10,paddingTop:20,paddingBottom:20}}>
       <ImageBackground source={require('../../assets/images/logo.png')} style={{width:220,height:220,opacity:0.2,position:'absolute',bottom:-30,right:-50}} />
       <ScrollView>  
-      <Text style={{marginLeft:10,fontSize:18,fontWeight:'bold',color:'#4F6367'}}>Sale Details {addDetails?.toBePaid + addDetails?.quantity}</Text>
+      <Text style={{marginLeft:10,fontSize:18,fontWeight:'bold',color:'#4F6367'}}>Sale Details</Text>
       <Divider style={{marginLeft:10,height:3,width:90,marginBottom:20}} />
       <View style={{paddingHorizontal:15,marginBottom:15}}>
         <Text style={{color:'#4F6367',marginBottom:10}}>Customer</Text>
@@ -206,7 +217,14 @@ const SaleAddScreen = () => {
               </View>
             
           </View>
-            
+          {
+            errorMsg !== '' && (
+            <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
+              <Text style={{color:'red'}}>{errorMsg}</Text>
+            </View>
+            )
+          }
+        
           <View style={{flex:1,flexDirection:'row',marginBottom:10}}>
                 <View style={{flex:0.5,alignItems:'flex-end',justifyContent:'center',paddingRight:5}}>
                   <TouchableOpacity disabled={addDetails.quantity === '' || addDetails.product_id === ''} onPress={addToSaleList} style={{backgroundColor:'#4F6367',borderRadius:15,padding:10,paddingHorizontal:20}}><Text style={{color:'white',fontWeight:'bold'}}>Add</Text></TouchableOpacity>
