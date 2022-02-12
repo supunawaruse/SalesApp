@@ -2,6 +2,8 @@ const db = require('../models/index')
 
 const Purchase = db.purchases
 const Products = db.product
+const Admin = db.admins
+const Supplier = db.supplier
 const Customer = db.customer
 const PurchaseProducts = db.purchaseproduct
 
@@ -11,6 +13,17 @@ const getAllPurchases = async (req, res) => {
             include:[
                 {
                     model:Products,
+                    as:'products'
+                },
+                {
+                    model:Admin,
+                    attributes: ['name'],
+                    as:'admin'
+                },
+                {
+                    model:Supplier,
+                    attributes: ['name'],
+                    as:'supplier'
                 },
             ]
         });

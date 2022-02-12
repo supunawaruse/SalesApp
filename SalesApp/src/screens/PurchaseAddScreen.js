@@ -18,6 +18,7 @@ const PurchaseAddScreen = () => {
   const [suppliersList,setSuppliersList] = useState([])
   const [adminsList,setAdminsList] = useState([])
   const [productList,setProductList] = useState([])
+  const [allProductList,setAllProductList] = useState([])
   const [purchasedProductList,setPurchasedProductList] = useState([])
   const [addDetails,setAddDetails] = useState({quantity:'',product_id:'',supplier_id:'',admin_id:''})
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -74,6 +75,7 @@ const PurchaseAddScreen = () => {
   const getAllProductsToScreen= async () => {
     const data = await getAllProducts()
     setProductList(data)
+    setAllProductList(data)
   }
 
   const onChangeText = (text) => {
@@ -84,6 +86,9 @@ const PurchaseAddScreen = () => {
     const item = productList.filter((item)=> item.id === addDetails.product_id)[0]
     const data = {item,quantity:addDetails.quantity}
     setPurchasedProductList([...purchasedProductList,data])
+
+    const newProductList = productList.filter((item) => item.id !== addDetails.product_id)
+    setProductList(newProductList)
   }
 
   const calcualteTotal = () => {
@@ -118,9 +123,11 @@ const PurchaseAddScreen = () => {
   }
 
   const onReset = () =>{
+    setProductList(allProductList)
     setPurchasedProductList([])
-    setAddDetails({})
+    setAddDetails({quantity:'',product_id:''})
   }
+  
  
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -171,31 +178,27 @@ const PurchaseAddScreen = () => {
             />
           </View>
           <View style={{marginTop:8,paddingHorizontal:10,marginBottom:10}}>
-          <Text style={{marginBottom:8}}>Products:</Text>
+          <Text style={{marginBottom:8}}>Add Products:</Text>
           <View style={{flex:1,flexDirection:'row',paddingHorizontal:10,marginBottom:5,borderRadius:10}}>
-              <View style={{flex:0.5,alignItems:'center'}}>
+              <View style={{flex:0.7,alignItems:'center'}}>
               <Text>Product Name</Text>
               </View>
               <View style={{flex:0.3,alignItems:'center'}}>
               <Text>Qty</Text>
               </View>
-              <View style={{flex:0.3,alignItems:'center'}}>
-                <TouchableOpacity onPress={onReset} >
-                <Text>Reset</Text>
-                </TouchableOpacity>
-              </View>
+            
 
           </View>
           <View style={{flex:1,flexDirection:'row',paddingHorizontal:10,marginBottom:5,borderRadius:10}}>
-              <View style={{flex:0.45,alignItems:'center',justifyContent:'center'}}>
+              <View style={{flex:0.7,alignItems:'center',justifyContent:'center'}}>
                
-                    <Select  variant='filled' selectedValue={addDetails.product_id ? addDetails.product_id : 'Select Product'} paddingLeft="5" bgColor={"#7A9E9F"} minWidth="110"  placeholder="Select Product" placeholderTextColor={"#E7E7E7"} color={"#E7E7E7"} borderRadius={"2xl"} _selectedItem={{bg: "gray.200",}} mt={1} 
+                    <Select  variant='filled' selectedValue={addDetails.product_id ? addDetails.product_id : 'Select Product'} paddingLeft="5" bgColor={"#7A9E9F"} minWidth="60%"  placeholder="Select Product" placeholderTextColor={"#E7E7E7"} color={"#E7E7E7"} borderRadius={"2xl"} _selectedItem={{bg: "gray.200",}} mt={1} 
                     onValueChange={itemValue => setAddDetails({...addDetails,product_id:itemValue})}>
                         {
                           productList.length > 0 ? productList.map((item)=> (
-                            <Select.Item key={item.id} label={item.name} value={item.id} />
+                            <Select.Item key={item.id} label={`${item.name} - (${item.category})`} value={item.id} />
                           )):(
-                            <Select.Item key={1} label="No Products" value="No Products" />
+                            <Select.Item disabled={true} key={1} label="No Products" value="No Products" />
                           )
                         }
                     </Select>
@@ -210,10 +213,20 @@ const PurchaseAddScreen = () => {
                 placeholderTextColor='white' 
                 style={{backgroundColor:'#7A9E9F',borderRadius:15,padding:5,paddingHorizontal:20,color:'white', width:70}} />
               </View>
-              <View style={{flex:0.2,alignItems:'center',justifyContent:'center'}}>
-              <TouchableOpacity disabled={addDetails.quantity === ''} onPress={addToPurchaseList} style={{backgroundColor:'#4F6367',borderRadius:15,padding:10,paddingHorizontal:20}}><Text style={{color:'white',fontWeight:'bold'}}>Add</Text></TouchableOpacity>
-              </View>
+            
           </View>
+            
+          <View style={{flex:1,flexDirection:'row',marginBottom:10}}>
+                <View style={{flex:0.5,alignItems:'flex-end',justifyContent:'center',paddingRight:5}}>
+                  <TouchableOpacity disabled={addDetails.quantity === '' || addDetails.product_id === ''} onPress={addToPurchaseList} style={{backgroundColor:'#4F6367',borderRadius:15,padding:10,paddingHorizontal:20}}><Text style={{color:'white',fontWeight:'bold'}}>Add</Text></TouchableOpacity>
+                </View>
+                <View style={{flex:0.5,alignItems:'flex-start',paddingLeft:5}}>
+                  <TouchableOpacity style={{backgroundColor:'#4F6367',borderRadius:15,padding:10,paddingHorizontal:20}} onPress={onReset} >
+                  <Text style={{color:'white',fontWeight:'bold'}}>Reset</Text>
+                  </TouchableOpacity>
+                </View>
+          </View>
+
           {
             purchasedProductList.length > 0 && purchasedProductList.map((item,index)=> (
               <View key={index} style={{flex:1,flexDirection:'row',paddingHorizontal:10}}>

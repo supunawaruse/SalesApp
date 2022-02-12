@@ -4,9 +4,10 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {Card} from 'react-native-paper'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import { Item } from 'react-native-paper/lib/typescript/components/List/List';
 
 
-const SalePurchase = ({type}) => {
+const SalePurchase = ({type,data}) => {
   return (
     <View style={{
         backgroundColor:"#4F6367",borderRadius:10,padding:10,marginBottom:10}}>
@@ -17,10 +18,10 @@ const SalePurchase = ({type}) => {
                 </View>
             </View> 
             <View style={{flex:0.8,justifyContent:'center',paddingLeft:5}}>
-                <Text style={{fontWeight:'bold',color:'white',letterSpacing:1.5}}>Pruchase Id: 1</Text>
-                        <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>Supplier: Chaminda Gunasinghe</Text>
-                <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>Date: 22/09/2021</Text>
-                <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>Total: 25000.00</Text>
+                <Text style={{fontWeight:'bold',color:'white',letterSpacing:1.5,marginBottom:5}}>Supplier: {data.supplier.name} </Text>
+                <Text style={{fontWeight:'bold',color:'white',letterSpacing:1.5,marginBottom:5}}>Admin: {data.admin.name}</Text>
+                <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>Date: {data.purchaseDate.substring(0,10)}</Text>
+                <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>Total: {data.total}</Text>
             </View>
             
         </View>
@@ -38,29 +39,24 @@ const SalePurchase = ({type}) => {
               <Text style={{color:'#4F6367',letterSpacing:1.5,fontSize:13,fontWeight:'bold'}}>Price</Text>
               </View>
           </View>
-          <View style={{flex:1,flexDirection:'row',paddingHorizontal:10}}>
-              <View style={{flex:0.5,alignItems:'center'}}>
-              <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>Blue-Flex Face Mask</Text>
-              </View>
-              <View style={{flex:0.2,alignItems:'center'}}>
-              <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>250</Text>
-              </View>
-              <View style={{flex:0.3,alignItems:'center'}}>
-              <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>25000.00</Text>
-              </View>
-          </View>
-          <View style={{flex:1,flexDirection:'row',paddingHorizontal:10}}>
-              <View style={{flex:0.5,alignItems:'center'}}>
-              <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>Blue-Flex Face Mask</Text>
-              </View>
-              <View style={{flex:0.2,alignItems:'center'}}>
-              <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>250</Text>
-              </View>
-              <View style={{flex:0.3,alignItems:'center'}}>
-              <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>25000.00</Text>
-              </View>
-          </View>
-    
+          {
+              data.products.length > 0 ? data.products.map((item)=> (
+                <View key={item.id} style={{flex:1,flexDirection:'row',paddingHorizontal:10}}>
+                    <View style={{flex:0.5,alignItems:'center'}}>
+                    <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>{item.name}</Text>
+                    </View>
+                    <View style={{flex:0.2,alignItems:'center'}}>
+                    <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>{item.purchaseproduct.quantity}</Text>
+                    </View>
+                    <View style={{flex:0.3,alignItems:'center'}}>
+                    <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>{item.purchaseproduct.quantity * item.buyingPrice}</Text>
+                </View>
+            </View>
+              )):(
+                  <Text>No Products</Text>
+              )
+          }
+         
         </View>
         
     </View>
