@@ -115,8 +115,9 @@ const PurchaseAddScreen = () => {
       purchaseDate: addDetails.date,
       products:products
       })
-      setAddDetails({})
+      setAddDetails({quantity:'',product_id:'',supplier_id:'',admin_id:''})
       setPurchasedProductList([])
+      setProductList(allProductList)
     } catch (error) {
       console.log(error)
     }

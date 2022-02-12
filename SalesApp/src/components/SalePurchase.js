@@ -18,9 +18,19 @@ const SalePurchase = ({type,data}) => {
                 </View>
             </View> 
             <View style={{flex:0.8,justifyContent:'center',paddingLeft:5}}>
-                <Text style={{fontWeight:'bold',color:'white',letterSpacing:1.5,marginBottom:5}}>Supplier: {data.supplier.name} </Text>
-                <Text style={{fontWeight:'bold',color:'white',letterSpacing:1.5,marginBottom:5}}>Admin: {data.admin.name}</Text>
-                <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>Date: {data.purchaseDate.substring(0,10)}</Text>
+                {
+                    type === 'sale' ? (
+                        <Text style={{fontWeight:'bold',color:'white',letterSpacing:1.5,marginBottom:5}}>Customer: {data.customer.name} </Text>
+                    ) : 
+                    ( 
+                        <>
+                        <Text style={{fontWeight:'bold',color:'white',letterSpacing:1.5,marginBottom:5}}>Supplier: {data.supplier.name} </Text>
+                        <Text style={{fontWeight:'bold',color:'white',letterSpacing:1.5,marginBottom:5}}>Admin: {data.admin.name}</Text>
+                        </>
+                    )
+                    }
+               
+                <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>Date: {type === 'purchase' ? data.purchaseDate.substring(0,10): data.salesDate.substring(0,10)}</Text>
                 <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>Total: {data.total}</Text>
             </View>
             
@@ -46,10 +56,10 @@ const SalePurchase = ({type,data}) => {
                     <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>{item.name}</Text>
                     </View>
                     <View style={{flex:0.2,alignItems:'center'}}>
-                    <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>{item.purchaseproduct.quantity}</Text>
+                    <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>{type === 'purchase' ? item.purchaseproduct.quantity : item.saleproduct.quantity}</Text>
                     </View>
                     <View style={{flex:0.3,alignItems:'center'}}>
-                    <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>{item.purchaseproduct.quantity * item.buyingPrice}</Text>
+                    <Text style={{color:'#D1D1D1',letterSpacing:1.5,fontSize:13}}>{type === 'purchase' ? item.purchaseproduct.quantity * item.buyingPrice : item.saleproduct.quantity * item.buyingPrice}</Text>
                 </View>
             </View>
               )):(

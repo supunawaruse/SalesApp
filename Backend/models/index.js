@@ -61,13 +61,12 @@ db.purchases.belongsTo(db.supplier,{
 //relationship between product and purchase
 db.purchases.belongsToMany(db.product, { through: db.purchaseproduct });
 db.product.belongsToMany(db.purchases, { through: db.purchaseproduct });
-// db.purchases.belongsToMany(db.product,{
-//     through: db.purchaseproduct,
-// })
 
-// db.product.belongsToMany(db.purchases,{
-//     through: db.purchaseproduct,
-// })
+
+//relationship between product and sale
+db.sale.belongsToMany(db.product, { through: db.saleproduct });
+db.product.belongsToMany(db.sale, { through: db.saleproduct });
+
 
 // relationship between sale and customer
 db.customer.hasMany(db.sale,{

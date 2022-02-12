@@ -65,16 +65,20 @@ const PurchaseAllScreen = () => {
               supplierList.length > 0 ? supplierList.map((item)=> (
                 <Select.Item  key={item.id} label={item.name} value={item.id} />
               )):(
-                <Select.Item key={1} label="No Suppliers" value="No Suppliers" />
+                <Select.Item disabled={true} key={1} label="No Suppliers" value="No Suppliers" />
               )
               }
         </Select>
 
         <View style={{marginTop:10}}>
           {
-            supplierPurchases.length > 0 && supplierPurchases.map((item)=> (
+            supplierPurchases.length > 0 ? supplierPurchases.map((item)=> (
               <SalePurchase key={item.id} type={'purchase'} data = {item} />
-            ))
+            )):(
+              <View style={{padding:10}}>
+                 <Text>No Purchases on this supplier</Text>
+              </View>
+            )
           }
         </View>
   </View>
