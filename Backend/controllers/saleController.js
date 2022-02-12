@@ -103,7 +103,7 @@ const addSale = async (req, res) => {
         total:req.body.total,
         customer_id:req.body.customer_id,
         salesDate: req.body.salesDate,
-        toBePaid:req.body.toBePaid !== '' ? req.body.toBePaid : '0'
+        toBePaid:req.body.toBePaid !== '' ? parseInt(req.body.toBePaid) : 0
     }
     const products = req.body.products;
 

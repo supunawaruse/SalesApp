@@ -64,14 +64,41 @@ const getStockById = async (req, res) => {
 const addStock = async (req, res) => {
     
     const data = {
-        stockPlace:req.body.stockPlace,
         stockQuantity: req.body.stockQuantity,
         product_id:req.body.product_id
     }
 
     try {
-        const stock = await Stock.create(data)
-        res.status(201).send(stock)
+        const stk = await Stock.findOne({where:{product_id:data.product_id}})
+        if(stk){
+            const newStockValue = parseInt(stk.dataValues.stockQuantity) + parseInt(req.body.stockQuantity)
+            await stk.update({stockQuantity:newStockValue})
+        }else{
+            await Stock.create(data)
+        }
+        res.status(201).send({Message:"Add to stock"})
+    } catch (error) {
+        res.send(400).send({message:'This is an error'})
+        console.log(error);
+    }
+}
+
+const reduceStock = async (req, res) => {
+    
+    const data = {
+        quantity: req.body.quantity,
+        product_id:req.body.product_id
+    }
+
+    try {
+        const stk = await Stock.findOne({where:{product_id:data.product_id}})
+        if(stk){
+            const newStockValue = parseInt(stk.dataValues.stockQuantity) - parseInt(req.body.quantity)
+            await stk.update({stockQuantity:newStockValue})
+        }else{
+            console.log('No stock to reduce')
+        }
+        res.status(201).send({Message:"Reduced from stock"})
     } catch (error) {
         res.send(400).send({message:'This is an error'})
         console.log(error);
@@ -120,4 +147,4 @@ const deleteStock = async (req, res) => {
     }
 }
 
-module.exports = {getAllStocks,addStock,getStockById,updateStock,deleteStock,getStockByProductId}
+module.exports = {getAllStocks,addStock,getStockById,updateStock,deleteStock,getStockByProductId,reduceStock}

@@ -6,10 +6,6 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true
         },
-        stockPlace:{
-            type:DataTypes.STRING,
-            allowNull: false
-        },
         stockQuantity: {
             type:DataTypes.INTEGER,
             allowNull: false

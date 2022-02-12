@@ -61,7 +61,6 @@ const StockAllScreen = () => {
     const item = stocks.filter((stock) => stock.id === selectedItem.id)[0]
     try {
       const {data} = await axios.put(`http://192.168.1.10:8080/api/stock/${item.id}`,{
-        stockPlace:selectedItem.stockPlace,
         stockQuantity:selectedItem.stockQuantity
       })
       hideEditModal();
@@ -114,7 +113,6 @@ const StockAllScreen = () => {
     <Portal>
       <Modal visible={visibleEdit} onDismiss={hideEditModal} contentContainerStyle={{backgroundColor: '#4F6367', padding: 18, margin:40,borderRadius:10}}>
         <Text style={{fontSize:16,fontWeight:'bold',marginBottom:10,color:'white'}}>Edit Stock</Text>
-        <InputField label={'Stock Place'} placeholder={'Enter stock place'} isModal={true} value={selectedItem?.stockPlace}  onChangeText={(text) => handleChange(text,'stockPlace')}/>
         <InputField label={'Stock Quantity'} placeholder={'Enter stock quantity'} isModal={true} value={selectedItem?.stockQuantity.toString()}  onChangeText={(text) => handleChange(text,'stockQuantity')}/>
         <TouchableOpacity onPress={onEdit} style={{marginTop:10,backgroundColor:'#7A9E9F',padding:10,paddingHorizontal:20,borderRadius:10,alignItems:'center',alignSelf:'center'}}><Text  style={{color:'white',fontWeight:'bold'}}>Save</Text></TouchableOpacity>
       </Modal>

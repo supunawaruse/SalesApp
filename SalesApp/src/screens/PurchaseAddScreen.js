@@ -115,6 +115,14 @@ const PurchaseAddScreen = () => {
       purchaseDate: addDetails.date,
       products:products
       })
+
+      products.forEach( async (item) => {
+        await axios.post('http://192.168.1.10:8080/api/stock/',{
+        stockQuantity:item.quantity,
+        product_id:item.id
+      })
+      })
+
       setAddDetails({quantity:'',product_id:'',supplier_id:'',admin_id:''})
       setPurchasedProductList([])
       setProductList(allProductList)

@@ -111,6 +111,14 @@ const SaleAddScreen = () => {
         toBePaid:addDetails.toBePaid,
         products:products
       })
+
+      products.forEach(async(item)=>{
+        await axios.post('http://192.168.1.10:8080/api/stock/reduceStock',{
+          quantity:item.quantity,
+          product_id:item.id
+        })
+      })
+
       setAddDetails({quantity:'',product_id:'',customer_id:'',toBePaid:''})
       setProductList(allProductList)
       setSaleProductList([])

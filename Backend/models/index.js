@@ -81,15 +81,19 @@ db.sale.belongsTo(db.customer,{
 
 
 //relationship between product and stock
-db.product.hasMany(db.stock,{
-    foreignKey: 'product_id',
-    as:'stock'
-})
 
-db.stock.belongsTo(db.product,{
-    foreignKey: 'product_id',
-    as:'product'
-})
+db.product.hasOne(db.stock,{foreignKey: 'product_id'})
+db.stock.belongsTo(db.product,{foreignKey: 'product_id'})
+// db.product.hasMany(db.stock,{
+//     foreignKey: 'product_id',
+//     as:'stock'
+// })
+
+
+// db.stock.belongsTo(db.product,{
+//     foreignKey: 'product_id',
+//     as:'product'
+// })
 
 
 module.exports = db

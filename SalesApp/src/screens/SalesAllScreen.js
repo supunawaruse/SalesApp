@@ -76,7 +76,7 @@ const SalesAllScreen = () => {
               <SalePurchase key={item.id} type={'sale'} data = {item} />
             )):(
               <View style={{padding:10}}>
-                 <Text>No Sales on this customer</Text>
+                 <Text>No Sales</Text>
               </View>
             )
           }

@@ -76,7 +76,7 @@ const PurchaseAllScreen = () => {
               <SalePurchase key={item.id} type={'purchase'} data = {item} />
             )):(
               <View style={{padding:10}}>
-                 <Text>No Purchases on this supplier</Text>
+                 <Text>No Purchases</Text>
               </View>
             )
           }

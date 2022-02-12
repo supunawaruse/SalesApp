@@ -11,7 +11,7 @@ import { Select } from "native-base";
 const StockAddScreen = () => {
 
   const isFocused = useIsFocused();
-  const [addDetails,setAddDetails] = useState({product_id:'',stockQuantity:'',stockPlace:''})
+  const [addDetails,setAddDetails] = useState({product_id:'',stockQuantity:''})
   const [productList,setProductList] = useState([])
 
   useEffect(()=>{
@@ -38,10 +38,9 @@ const StockAddScreen = () => {
     try {
      await axios.post('http://192.168.1.10:8080/api/stock/',{
       stockQuantity:addDetails.stockQuantity,
-      stockPlace:addDetails.stockPlace,
       product_id:addDetails.product_id
       })
-      setAddDetails({stockQuantity:'',stockPlace:'',product_id:''})
+      setAddDetails({stockQuantity:'',product_id:''})
       console.log('Successfully added')
     } catch (error) {
       console.log(error)
@@ -73,7 +72,6 @@ const StockAddScreen = () => {
         </Select>
         </View>
           <InputField  label={'Stock Quantity'} placeholder={'Enter stock quantity'} value={addDetails.stockQuantity}  onChangeText={(text) => handleChange(text,'stockQuantity')}/>
-          <InputField  label={'Stock Place'} placeholder={'Enter stock place'} value={addDetails.stockPlace}  onChangeText={(text) => handleChange(text,'stockPlace')}/>
           <Button onPress={onAdd} buttonText={'Add Stock'} />
       
       </ScrollView>
