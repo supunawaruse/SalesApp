@@ -1,6 +1,7 @@
 import 'react-native-gesture-handler';
 import React, {useEffect} from 'react';
 import { LogBox } from 'react-native';
+import SplashScreen from 'react-native-splash-screen'
 import DashboardScreen from './src/screens/DashboardScreen';
 import AdminAddScreen from './src/screens/AdminAddScreen';
 import AdminAllScreen from './src/screens/AdminAllScreen';
@@ -30,8 +31,11 @@ LogBox.ignoreLogs([
 
 LogBox.ignoreLogs(['NativeBase:']);
 
-
 const App = () => {
+
+  useEffect(()=>{
+    SplashScreen.hide()
+  },[])
 
   return (
     <NativeBaseProvider>

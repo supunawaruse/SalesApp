@@ -8,6 +8,8 @@ import InputField from '../components/InputField';
 import { getAllAdmins } from '../services/AdminServices';
 import { useIsFocused } from "@react-navigation/native";
 import axios from 'axios';
+import { ActivityIndicator, Colors } from 'react-native-paper';
+
 
 const AdminAllScreen = () => {
 
@@ -15,6 +17,7 @@ const AdminAllScreen = () => {
   const [visibleEdit, setVisibleEdit] = useState(false);
   const [admins,setAdmins] = useState([])
   const [selectedItem, setSelectedItem] = useState()
+  const [isLoading,setIsLoading] = useState(true)
   const isFocused = useIsFocused();
 
   useEffect(()=>{
@@ -28,6 +31,7 @@ const AdminAllScreen = () => {
   const getAll = async () => {
     const data = await getAllAdmins()
     setAdmins(data)
+    setIsLoading(false)
   }
 
   const onDelete = async () => {
@@ -90,16 +94,27 @@ const AdminAllScreen = () => {
       </Portal>
      
     <View style={{flex:1,padding:10,paddingTop:20}}>
-      <Text style={{marginLeft:10,fontSize:18,fontWeight:'bold',color:'#4F6367'}}>Admins</Text>
-      <Divider style={{marginLeft:10,height:3,width:70,marginBottom:20}} />
-      <ScrollView>
-  {
-    admins.length > 0 && admins.map((item)=>(
-      <AdminSupplierCustomer key={item.id} type={'admin'} deleteModalCallBack = {showDeleteModal}  editModalCallBack = {showEditModal} selectItemCallBack = {selectItem}  data={item}/>
-    ))
-  }
-     
-    </ScrollView>
+    <Text style={{marginLeft:10,fontSize:18,fontWeight:'bold',color:'#4F6367'}}>Admins</Text>
+    <Divider style={{marginLeft:10,height:3,width:70,marginBottom:20}} />
+      
+      {
+        isLoading ? (<ActivityIndicator style={{marginTop:10}} animating={true} color={'#4F6367'} />)
+        :
+        (
+          <ScrollView>
+              {
+                admins.length > 0 ? admins.map((item)=>(
+                  <AdminSupplierCustomer key={item.id} type={'admin'} deleteModalCallBack = {showDeleteModal}  editModalCallBack = {showEditModal} selectItemCallBack = {selectItem}  data={item}/>
+                )):(
+                  <View style={{padding:10}}>
+                      <Text style={{color:'#4F6367'}}>No Admins...</Text>
+                  </View>
+                )
+              }
+          </ScrollView>
+        )
+      }
+    
      
     </View>
     </Provider>

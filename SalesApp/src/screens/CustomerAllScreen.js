@@ -8,6 +8,7 @@ import InputField from '../components/InputField';
 import { getAllCustomers } from '../services/CustomerServices';
 import { useIsFocused } from "@react-navigation/native";
 import axios from 'axios';
+import { ActivityIndicator, Colors } from 'react-native-paper';
 
 const CustomerAllScreen = () => {
 
@@ -16,6 +17,7 @@ const CustomerAllScreen = () => {
   const [customers,setCustomers] = useState([])
   const [selectedItem, setSelectedItem] = useState()
   const isFocused = useIsFocused();
+  const [isLoading,setIsLoading] = useState(true)
 
   useEffect(()=>{
     let mounted = true;
@@ -28,6 +30,7 @@ const CustomerAllScreen = () => {
   const getAll = async () => {
     const data = await getAllCustomers()
     setCustomers(data)
+    setIsLoading(false)
   }
 
   const onDelete = async () => {
@@ -92,14 +95,23 @@ const CustomerAllScreen = () => {
     <View style={{flex:1,padding:10,paddingTop:20}}>
     <Text style={{marginLeft:10,fontSize:18,fontWeight:'bold',color:'#4F6367'}}>Customers</Text>
     <Divider style={{marginLeft:10,height:3,width:90,marginBottom:20}} />
-    <ScrollView>
+
     {
-    customers.length > 0 && customers.map((item)=>(
-      <AdminSupplierCustomer key={item.id} type={'customer'} deleteModalCallBack = {showDeleteModal}  editModalCallBack = {showEditModal} selectItemCallBack = {selectItem}  data={item}/>
-    ))
-  }
-    </ScrollView>
-  
+      isLoading ? (<ActivityIndicator style={{marginTop:10}} animating={true} color={'#4F6367'} />)
+      :(
+        <ScrollView>
+        {
+        customers.length > 0 ? customers.map((item)=>(
+          <AdminSupplierCustomer key={item.id} type={'customer'} deleteModalCallBack = {showDeleteModal}  editModalCallBack = {showEditModal} selectItemCallBack = {selectItem}  data={item}/>
+        )):(
+          <View style={{padding:10}}>
+              <Text style={{color:'#4F6367'}}>No Customers...</Text>
+          </View>
+        )
+      }
+        </ScrollView>
+      )
+    }
   </View>
   </Provider>
     </>

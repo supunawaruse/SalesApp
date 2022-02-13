@@ -10,6 +10,7 @@ import { useIsFocused } from "@react-navigation/native";
 import axios from 'axios';
 import { Select } from "native-base";
 import { getAllProductsWithoutStock } from '../services/ProductsServices';
+import { ActivityIndicator, Colors } from 'react-native-paper';
 
 const StockAllScreen = () => {
 
@@ -21,6 +22,8 @@ const StockAllScreen = () => {
   const isFocused = useIsFocused();
   const [productList,setProductList] = useState([])
   const [searchedItem, setSearchedItem] = useState()
+  const [isLoading,setIsLoading] = useState(true)
+
 
   useEffect(()=>{
     let mounted = true;
@@ -37,6 +40,7 @@ const StockAllScreen = () => {
     const data = await getAllStocks()
     setStocks(data)
     setProductStocks(data)
+    setIsLoading(false)
   }
 
   const getAllProducts = async () => {
@@ -138,14 +142,24 @@ const StockAllScreen = () => {
              
         </Select>
     
-    <View style={{marginTop:10}}>
     {
-    productStocks.length > 0 && productStocks.map((item)=>(
-      <AdminSupplierCustomer key={item.id} type={'stock'} deleteModalCallBack = {showDeleteModal}  editModalCallBack = {showEditModal} selectItemCallBack = {selectItem}  data={item}/>
-    ))
+      isLoading ? (<ActivityIndicator style={{marginTop:10}} animating={true} color={'#4F6367'} />)
+      :
+      (
+        <View style={{marginTop:10}}>
+        {
+          productStocks.length > 0 ? productStocks.map((item)=>(
+            <AdminSupplierCustomer key={item.id} type={'stock'} deleteModalCallBack = {showDeleteModal}  editModalCallBack = {showEditModal} selectItemCallBack = {selectItem}  data={item}/>
+          )):(
+            <View style={{padding:10}}>
+                <Text style={{color:'#4F6367'}}>No Stocks...</Text>
+            </View>
+          )
+        }
+        </View>
+      )
     }
-    </View>
-        
+
   </View>
   </ScrollView>
   </TouchableWithoutFeedback>

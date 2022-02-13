@@ -7,6 +7,7 @@ import { useIsFocused } from "@react-navigation/native";
 import { Select } from "native-base";
 import { getAllSales } from '../services/SalesServices';
 import {getAllCustomers} from '../services/CustomerServices'
+import { ActivityIndicator, Colors } from 'react-native-paper';
 
 const SalesAllScreen = () => {
 
@@ -16,6 +17,7 @@ const SalesAllScreen = () => {
   const isFocused = useIsFocused();
   const [customersList,setCustomersList] = useState([])
   const [searchedItem, setSearchedItem] = useState()
+  const [isLoading,setIsLoading] = useState(true)
 
   useEffect(()=>{
     let mounted = true;
@@ -32,6 +34,7 @@ const SalesAllScreen = () => {
     const data = await getAllSales()
     setSales(data)
     setCustomerSales(data)
+    setIsLoading(false)
   }
 
   const getAllCustomersFromDatabase = async () => {
@@ -70,17 +73,24 @@ const SalesAllScreen = () => {
               }
         </Select>
 
-        <View style={{marginTop:10}}>
-          {
-            customerSales.length > 0 ? customerSales.map((item)=> (
-              <SalePurchase key={item.id} type={'sale'} data = {item} />
-            )):(
-              <View style={{padding:10}}>
-                 <Text>No Sales</Text>
-              </View>
-            )
-          }
-        </View>
+        {
+          isLoading ? (<ActivityIndicator style={{marginTop:10}} animating={true} color={'#4F6367'} />)
+          :
+          (
+            <View style={{marginTop:10}}>
+              {
+                customerSales.length > 0 ? customerSales.map((item)=> (
+                  <SalePurchase key={item.id} type={'sale'} data = {item} />
+                )):(
+                  <View style={{padding:10}}>
+                    <Text>No Sales</Text>
+                  </View>
+                )
+              }
+            </View>
+          )
+        }
+
   </View>
   </ScrollView>
   </TouchableWithoutFeedback>

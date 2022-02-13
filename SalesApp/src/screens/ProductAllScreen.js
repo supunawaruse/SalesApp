@@ -8,8 +8,7 @@ import InputField from '../components/InputField';
 import { getAllProducts } from '../services/ProductsServices';
 import { useIsFocused } from "@react-navigation/native";
 import axios from 'axios';
-
-
+import { ActivityIndicator, Colors } from 'react-native-paper';
 
 const ProductAllScreen = () => {
 
@@ -18,6 +17,7 @@ const ProductAllScreen = () => {
   const [products,setProducts] = useState([])
   const [selectedItem, setSelectedItem] = useState()
   const isFocused = useIsFocused();
+  const [isLoading,setIsLoading] = useState(true)
 
   useEffect(()=>{
     let mounted = true;
@@ -30,6 +30,7 @@ const ProductAllScreen = () => {
   const getAll = async () => {
     const data = await getAllProducts()
     setProducts(data)
+    setIsLoading(false)
   }
 
   const onDelete = async () => {
@@ -101,13 +102,25 @@ const ProductAllScreen = () => {
     <View style={{flex:1,padding:10,paddingTop:20}}>
     <Text style={{marginLeft:10,fontSize:18,fontWeight:'bold',color:'#4F6367'}}>Products</Text>
     <Divider style={{marginLeft:10,height:3,width:70,marginBottom:20}} />
-    <ScrollView>
+    
     {
-      products.length > 0 && products.map((item)=>(
-        <Product key={item.id} type={'product'}  deleteModalCallBack = {showDeleteModal}  editModalCallBack = {showEditModal} selectItemCallBack = {selectItem}  data={item}/>
-      ))
+      isLoading ? (<ActivityIndicator style={{marginTop:10}} animating={true} color={'#4F6367'} />)
+      : (
+        <ScrollView>
+          {
+            products.length > 0 ? products.map((item)=>(
+              <Product key={item.id} type={'product'}  deleteModalCallBack = {showDeleteModal}  editModalCallBack = {showEditModal} selectItemCallBack = {selectItem}  data={item}/>
+            )):(
+              <View style={{padding:10}}>
+                  <Text style={{color:'#4F6367'}}>No Products...</Text>
+              </View>
+            )
+          }
+      </ScrollView>
+      )
     }
-    </ScrollView>
+
+    
   
   </View>
 

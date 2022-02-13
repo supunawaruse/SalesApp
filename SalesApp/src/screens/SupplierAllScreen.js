@@ -8,6 +8,7 @@ import InputField from '../components/InputField';
 import { getAllSuppliers } from '../services/SuppliersServices';
 import { useIsFocused } from "@react-navigation/native";
 import axios from 'axios';
+import { ActivityIndicator, Colors } from 'react-native-paper';
 
 const SupplierAllScreen = () => {
 
@@ -16,6 +17,7 @@ const SupplierAllScreen = () => {
   const [suppliers,setSuppliers] = useState([])
   const [selectedItem, setSelectedItem] = useState()
   const isFocused = useIsFocused();
+  const [isLoading,setIsLoading] = useState(true)
 
   useEffect(()=>{
     let mounted = true;
@@ -28,6 +30,7 @@ const SupplierAllScreen = () => {
   const getAll = async () => {
     const data = await getAllSuppliers()
     setSuppliers(data)
+    setIsLoading(false)
   }
 
   const onDelete = async () => {
@@ -93,15 +96,24 @@ const SupplierAllScreen = () => {
     <View style={{flex:1,padding:10,paddingTop:20}}>
       <Text style={{marginLeft:10,fontSize:18,fontWeight:'bold',color:'#4F6367'}}>Suppliers</Text>
       <Divider style={{marginLeft:10,height:3,width:80,marginBottom:20}} />
-      <ScrollView>
       {
-        suppliers.length > 0 && suppliers.map((item)=>(
-          <AdminSupplierCustomer key={item.id} type={'supplier'} deleteModalCallBack = {showDeleteModal}  editModalCallBack = {showEditModal} selectItemCallBack = {selectItem}  data={item}/>
-        ))
+        isLoading ? (<ActivityIndicator style={{marginTop:10}} animating={true} color={'#4F6367'} />)
+        :(
+          <ScrollView>
+          {
+            suppliers.length > 0 ? suppliers.map((item)=>(
+              <AdminSupplierCustomer key={item.id} type={'supplier'} deleteModalCallBack = {showDeleteModal}  editModalCallBack = {showEditModal} selectItemCallBack = {selectItem}  data={item}/>
+            )):(
+              <View style={{padding:10}}>
+                  <Text style={{color:'#4F6367'}}>No Suppliers...</Text>
+              </View>
+            )
+          }
+          
+          </ScrollView>
+        )
       }
-      
-      </ScrollView>
-    
+
     </View>
     </Provider>
     </>

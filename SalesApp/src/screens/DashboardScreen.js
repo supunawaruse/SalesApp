@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View,ScrollView,TouchableWithoutFeedback, Keyboard, TextInput,TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View,ScrollView,TouchableWithoutFeedback, Keyboard, TextInput,TouchableOpacity, SafeAreaView } from 'react-native';
 import React,{useEffect,useState} from 'react';
 import {Divider} from 'react-native-paper'
 import SalePurchase from '../components/SalePurchase';
@@ -7,6 +7,7 @@ import ToBePaid from '../components/ToBePaid';
 import { useIsFocused } from "@react-navigation/native";
 import { Modal, Portal,  Button, Provider } from 'react-native-paper';
 import axios from 'axios';
+import { ActivityIndicator, Colors } from 'react-native-paper';
 
 const DashboardScreen = () => {
 
@@ -15,6 +16,7 @@ const DashboardScreen = () => {
   const [toBePaidSales, setToBePaidSales] = useState([])
   const [visibleEdit, setVisibleEdit] = useState(false);
   const [selectedItem, setSelectedItem] = useState()
+  const [isLoading,setIsLoading] = useState(true)
 
   useEffect(()=>{
     let mounted = true;
@@ -33,6 +35,7 @@ const DashboardScreen = () => {
   const getAllToBePaidSales = async() => {
     const data = await getToBePaidSales()
     setToBePaidSales(data)
+    setIsLoading(false)
   }
 
   const onEdit = async () => {
@@ -66,28 +69,34 @@ const DashboardScreen = () => {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
     <ScrollView>
     <View style={{flex:1,padding:10,paddingTop:20}}>
-    <Text style={{marginLeft:10,fontSize:18,fontWeight:'bold',color:'#4F6367'}}>Recent Sales</Text>
-    <Divider style={{marginLeft:10,height:3,width:95,marginBottom:15}} />
-    <View style={{marginTop:10}}>
-          {
-            recentSales.length > 0 ? recentSales.map((item)=> (
-              <SalePurchase key={item.id} type={'sale'} data = {item} />
-            )):(
-              <View style={{padding:10}}>
-                 <Text>No Recent Sales...</Text>
+          <Text style={{marginLeft:10,fontSize:18,fontWeight:'bold',color:'#4F6367'}}>Recent Sales</Text>
+          <Divider style={{marginLeft:10,height:3,width:95,marginBottom:15}} />
+     
+          <View style={{marginTop:10}}>
+                {
+                  recentSales.length > 0 ? recentSales.map((item)=> (
+                    <SalePurchase key={item.id} type={'sale'} data = {item} />
+                  )):(
+                    <View style={{padding:10}}>
+                       <Text style={{color:'#4F6367'}}>No Recent Sales...</Text>
+                    </View>
+                  )
+                }
               </View>
-            )
-          }
-        </View>
-
-      <Text style={{marginLeft:10,marginTop:10,fontSize:18,fontWeight:'bold',color:'#4F6367'}}>ToBePaid List</Text>
-      <Divider style={{marginLeft:10,height:3,width:115,marginBottom:15}} />
-          {
-            toBePaidSales.length > 0 && toBePaidSales.map((item) => (
-              <ToBePaid key={item.id} data={item} editModalCallBack={showEditModal} selectItemCallBack = {selectItem} />
-            ))
-          }
-
+      
+            <Text style={{marginLeft:10,marginTop:10,fontSize:18,fontWeight:'bold',color:'#4F6367'}}>ToBePaid List</Text>
+            <Divider style={{marginLeft:10,height:3,width:115,marginBottom:15}} />
+                {
+                  toBePaidSales.length > 0 ? toBePaidSales.map((item) => (
+                    <ToBePaid key={item.id} data={item} editModalCallBack={showEditModal} selectItemCallBack = {selectItem} />
+                  )):(
+                    <View style={{padding:10}}>
+                      <Text style={{color:'#4F6367'}}>No ToBePaid Sales</Text>
+                    </View>
+                  )
+                }
+          
+      
   </View>
   </ScrollView>
   </TouchableWithoutFeedback>
