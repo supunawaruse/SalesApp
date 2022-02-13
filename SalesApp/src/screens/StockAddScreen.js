@@ -13,6 +13,7 @@ const StockAddScreen = () => {
   const isFocused = useIsFocused();
   const [addDetails,setAddDetails] = useState({product_id:'',stockQuantity:''})
   const [productList,setProductList] = useState([])
+  const [btnDisable,setBtnDisable] = useState(true)
 
   useEffect(()=>{
     let mounted = true;
@@ -21,6 +22,14 @@ const StockAddScreen = () => {
     }
     return () => mounted = false;
   },[isFocused]);
+
+  useEffect(()=>{
+    if(addDetails.product_id !== '' && addDetails.stockQuantity !== ''){
+      setBtnDisable(false)
+    }else{
+      setBtnDisable(true)
+    }
+  },[addDetails])
 
   const getAllProducts = async () => {
     const data = await getAllProductsWithoutStock()
@@ -72,7 +81,7 @@ const StockAddScreen = () => {
         </Select>
         </View>
           <InputField  label={'Stock Quantity'} placeholder={'Enter stock quantity'} value={addDetails.stockQuantity}  onChangeText={(text) => handleChange(text,'stockQuantity')}/>
-          <Button onPress={onAdd} buttonText={'Add Stock'} />
+          <Button disabled={btnDisable} onPress={onAdd} buttonText={'Add Stock'} />
       
       </ScrollView>
     </SafeAreaView>

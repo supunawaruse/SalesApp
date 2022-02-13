@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TouchableWithoutFeedback,Keyboard,ScrollView,SafeAreaView,ImageBackground} from 'react-native';
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import {Divider} from 'react-native-paper'
 import InputField from '../components/InputField';
 import Button from '../components/Button';
@@ -7,10 +7,20 @@ import axios from 'axios';
 
 const AdminAddScreen = () => {
 
+  const [btnDisable,setBtnDisable] = useState(true)
+
   const [addDetails,setAddDetails] = useState({
     name:'',
     phone:'',
   })
+
+  useEffect(()=>{
+    if(addDetails.name !== '' && addDetails.phone !== ''){
+      setBtnDisable(false)
+    }else{
+      setBtnDisable(true)
+    }
+  },[addDetails])
 
   const handleChange = (text, name) => {
     setAddDetails({
@@ -18,6 +28,8 @@ const AdminAddScreen = () => {
       [name]: text,
     });
   };
+
+
 
   const onAdd = async() => {
     try {
@@ -42,7 +54,7 @@ const AdminAddScreen = () => {
        
           <InputField label={'Name'} placeholder={'Enter Name'} value={addDetails.name}  onChangeText={(text) => handleChange(text,'name')} />
           <InputField label={'Phone Number'} placeholder={'Enter phone number'} value={addDetails.phone}  onChangeText={(text) => handleChange(text,'phone')}/>
-          <Button onPress={onAdd} buttonText={'Add Admin'} />
+          <Button disabled={btnDisable} onPress={onAdd} buttonText={'Add Admin'} />
       
       </ScrollView>
     </SafeAreaView>

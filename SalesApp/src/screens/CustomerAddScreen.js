@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TouchableWithoutFeedback,Keyboard,ScrollView,SafeAreaView,ImageBackground} from 'react-native';
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import {Divider} from 'react-native-paper'
 import InputField from '../components/InputField';
 import Button from '../components/Button';
@@ -7,6 +7,7 @@ import axios from 'axios';
 
 const CustomerAddScreen = () => {
 
+  const [btnDisable,setBtnDisable] = useState(true)
   const [addDetails,setAddDetails] = useState({
     name:'',
     phone:'',
@@ -18,6 +19,14 @@ const CustomerAddScreen = () => {
       [name]: text,
     });
   };
+
+  useEffect(()=>{
+    if(addDetails.name !== '' && addDetails.phone !== ''){
+      setBtnDisable(false)
+    }else{
+      setBtnDisable(true)
+    }
+  },[addDetails])
 
   const onAdd = async() => {
     try {
@@ -44,7 +53,7 @@ const CustomerAddScreen = () => {
        
           <InputField label={'Name'} placeholder={'Enter Name'} value={addDetails.name}  onChangeText={(text) => handleChange(text,'name')}/>
           <InputField label={'Phone Number'} placeholder={'Enter phone number'}value={addDetails.phone}  onChangeText={(text) => handleChange(text,'phone')} />
-          <Button onPress={onAdd} buttonText={'Add Customer'} />
+          <Button disabled={btnDisable} onPress={onAdd} buttonText={'Add Customer'} />
       
       </ScrollView>
     </SafeAreaView>

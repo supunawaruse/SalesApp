@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TouchableWithoutFeedback,Keyboard,ScrollView,SafeAreaView,ImageBackground} from 'react-native';
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import {Divider} from 'react-native-paper'
 import InputField from '../components/InputField';
 import Button from '../components/Button';
@@ -8,6 +8,7 @@ import axios from 'axios';
 
 const SupplierAddScreen = () => {
 
+  const [btnDisable,setBtnDisable] = useState(true)
   const [addDetails,setAddDetails] = useState({
     name:'',
     phone:'',
@@ -20,6 +21,14 @@ const SupplierAddScreen = () => {
       [name]: text,
     });
   };
+
+  useEffect(()=>{
+    if(addDetails.name !== '' && addDetails.phone !== ''){
+      setBtnDisable(false)
+    }else{
+      setBtnDisable(true)
+    }
+  },[addDetails])
 
   const onAdd = async() => {
     try {
@@ -47,7 +56,7 @@ const SupplierAddScreen = () => {
           <InputField label={'Name'} placeholder={'Enter Name'} value={addDetails.name}  onChangeText={(text) => handleChange(text,'name')}/>
           <InputField label={'Phone Number'} placeholder={'Enter phone number'} value={addDetails.phone}  onChangeText={(text) => handleChange(text,'phone')} />
           <InputField label={'Location'} placeholder={'Enter location'} value={addDetails.location}  onChangeText={(text) => handleChange(text,'location')} />
-          <Button onPress={onAdd} buttonText={'Add Supplier'} />
+          <Button disabled={btnDisable} onPress={onAdd} buttonText={'Add Supplier'} />
       
       </ScrollView>
     </SafeAreaView>

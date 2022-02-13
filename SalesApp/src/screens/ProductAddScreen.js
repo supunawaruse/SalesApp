@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TouchableWithoutFeedback,Keyboard,ScrollView,SafeAreaView,ImageBackground} from 'react-native';
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import {Divider} from 'react-native-paper'
 import InputField from '../components/InputField';
 import Button from '../components/Button';
@@ -7,6 +7,7 @@ import axios from 'axios';
 
 const ProductAddScreen = () => {
 
+  const [btnDisable,setBtnDisable] = useState(true)
   const [addDetails,setAddDetails] = useState({
     name:'',
     category:'',
@@ -19,6 +20,14 @@ const ProductAddScreen = () => {
       [name]: text,
     });
   };
+
+  useEffect(()=>{
+    if(addDetails.name !== '' && addDetails.category !== '' && addDetails.buyingPrice !== ''){
+      setBtnDisable(false)
+    }else{
+      setBtnDisable(true)
+    }
+  },[addDetails])
 
   const onAdd = async() => {
     try {
@@ -46,7 +55,7 @@ const ProductAddScreen = () => {
           <InputField label={'Name'} placeholder={'Enter Name'} value={addDetails.name}  onChangeText={(text) => handleChange(text,'name')}/>
           <InputField label={'Category'} placeholder={'Enter Category'} value={addDetails.category}  onChangeText={(text) => handleChange(text,'category')} />
           <InputField label={'Buying Price'} placeholder={'Enter Buying Price'} value={addDetails.buyingPrice}  onChangeText={(text) => handleChange(text,'buyingPrice')} />
-          <Button onPress={onAdd} buttonText={'Add Product'} />
+          <Button disabled={btnDisable} onPress={onAdd} buttonText={'Add Product'} />
       
       </ScrollView>
     </SafeAreaView>
