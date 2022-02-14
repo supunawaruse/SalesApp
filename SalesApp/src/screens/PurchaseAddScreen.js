@@ -108,7 +108,7 @@ const PurchaseAddScreen = () => {
     })
 
     try {
-      await axios.post('http://192.168.1.10:8080/api/purchase/',{
+      await axios.post('https://mysql-sequalize-sales-app.herokuapp.com/api/purchase/',{
       total:addDetails?.total,
       admin_id:addDetails.admin_id,
       supplier_id:addDetails.supplier_id,
@@ -117,7 +117,7 @@ const PurchaseAddScreen = () => {
       })
 
       products.forEach( async (item) => {
-        await axios.post('http://192.168.1.10:8080/api/stock/',{
+        await axios.post('https://mysql-sequalize-sales-app.herokuapp.com/api/stock/',{
         stockQuantity:item.quantity,
         product_id:item.id
       })

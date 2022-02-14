@@ -36,7 +36,7 @@ const CustomerAllScreen = () => {
   const onDelete = async () => {
     const item = customers.filter((customer) => customer.id === selectedItem.id)[0]
     try {
-      await axios.delete(`http://192.168.1.10:8080/api/customer/${item.id}`)
+      await axios.delete(`https://mysql-sequalize-sales-app.herokuapp.com/api/customer/${item.id}`)
       setCustomers(customers.filter((customer) => customer.id !== item.id))
       hideDeleteModal();
       console.log('item deleted')
@@ -48,7 +48,7 @@ const CustomerAllScreen = () => {
   const onEdit = async () => {
     const item = customers.filter((customer) => customer.id === selectedItem.id)[0]
     try {
-      const {data} = await axios.put(`http://192.168.1.10:8080/api/customer/${item.id}`,{
+      const {data} = await axios.put(`https://mysql-sequalize-sales-app.herokuapp.com/api/customer/${item.id}`,{
         name:selectedItem.name,
         phone:selectedItem.phone
       })

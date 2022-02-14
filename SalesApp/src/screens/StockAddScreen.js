@@ -45,7 +45,7 @@ const StockAddScreen = () => {
 
   const onAdd = async() => {
     try {
-     await axios.post('http://192.168.1.10:8080/api/stock/',{
+     await axios.post('https://mysql-sequalize-sales-app.herokuapp.com/api/stock/',{
       stockQuantity:addDetails.stockQuantity,
       product_id:addDetails.product_id
       })

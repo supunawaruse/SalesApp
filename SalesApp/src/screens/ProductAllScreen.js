@@ -36,7 +36,7 @@ const ProductAllScreen = () => {
   const onDelete = async () => {
     const item = products.filter((product) => product.id === selectedItem.id)[0]
     try {
-      await axios.delete(`http://192.168.1.10:8080/api/product/${item.id}`)
+      await axios.delete(`https://mysql-sequalize-sales-app.herokuapp.com/api/product/${item.id}`)
       setProducts(products.filter((product) => product.id !== item.id))
       hideDeleteModal();
       console.log('item deleted')
@@ -48,7 +48,7 @@ const ProductAllScreen = () => {
   const onEdit = async () => {
     const item = products.filter((product) => product.id === selectedItem.id)[0]
     try {
-      const {data} = await axios.put(`http://192.168.1.10:8080/api/product/${item.id}`,{
+      const {data} = await axios.put(`https://mysql-sequalize-sales-app.herokuapp.com/api/product/${item.id}`,{
         name:selectedItem.name,
         category:selectedItem.category,
         buyingPrice:selectedItem.buyingPrice,

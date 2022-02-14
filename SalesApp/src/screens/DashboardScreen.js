@@ -41,7 +41,7 @@ const DashboardScreen = () => {
   const onEdit = async () => {
     const data = {...selectedItem,toBePaid:0}
     try {
-      await axios.put(`http://192.168.1.10:8080/api/sale/${selectedItem.id}`,data)
+      await axios.put(`https://mysql-sequalize-sales-app.herokuapp.com/api/sale/${selectedItem.id}`,data)
       setToBePaidSales(toBePaidSales.filter((sale) => sale.id !== selectedItem.id))
       hideEditModal()
     } catch (error) {

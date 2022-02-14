@@ -31,7 +31,7 @@ const ProductAddScreen = () => {
 
   const onAdd = async() => {
     try {
-     await axios.post('http://192.168.1.10:8080/api/product/',{
+     await axios.post('https://mysql-sequalize-sales-app.herokuapp.com/api/product/',{
         name:addDetails.name,
         category:addDetails.category,
         buyingPrice:addDetails.buyingPrice

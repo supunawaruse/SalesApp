@@ -51,7 +51,7 @@ const StockAllScreen = () => {
   const onDelete = async () => {
     const item = stocks.filter((stock) => stock.id === selectedItem.id)[0]
     try {
-      await axios.delete(`http://192.168.1.10:8080/api/stock/${item.id}`)
+      await axios.delete(`https://mysql-sequalize-sales-app.herokuapp.com/api/stock/${item.id}`)
       setStocks(stocks.filter((stock) => stock.id !== item.id))
       setProductStocks(productStocks.filter((stock) => stock.id !== item.id))
       hideDeleteModal();
@@ -64,7 +64,7 @@ const StockAllScreen = () => {
   const onEdit = async () => {
     const item = stocks.filter((stock) => stock.id === selectedItem.id)[0]
     try {
-      const {data} = await axios.put(`http://192.168.1.10:8080/api/stock/${item.id}`,{
+      const {data} = await axios.put(`https://mysql-sequalize-sales-app.herokuapp.com/api/stock/${item.id}`,{
         stockQuantity:selectedItem.stockQuantity
       })
       hideEditModal();

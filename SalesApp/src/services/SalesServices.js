@@ -3,7 +3,7 @@ import axios from "axios";
 const getAllSales = async () => {
 
     try {
-      const {data} = await axios.get('http://192.168.1.10:8080/api/sale')
+      const {data} = await axios.get('https://mysql-sequalize-sales-app.herokuapp.com/api/sale')
       return data;
     } catch (error) {
       console.log(error.response)
@@ -13,7 +13,7 @@ const getAllSales = async () => {
   const getRecentSales = async () => {
 
     try {
-      const {data} = await axios.get('http://192.168.1.10:8080/api/sale/recent')
+      const {data} = await axios.get('https://mysql-sequalize-sales-app.herokuapp.com/api/sale/recent')
       return data;
     } catch (error) {
       console.log(error.response)
@@ -23,7 +23,7 @@ const getAllSales = async () => {
   const getToBePaidSales = async () => {
 
     try {
-      const {data} = await axios.get('http://192.168.1.10:8080/api/sale/toBePaid')
+      const {data} = await axios.get('https://mysql-sequalize-sales-app.herokuapp.com/api/sale/toBePaid')
       return data;
     } catch (error) {
       console.log(error.response)
@@ -34,7 +34,7 @@ const getAllSales = async () => {
   const updateToBePaidSale = async ({id}) => {
 
     try {
-      await axios.get(`http://192.168.1.10:8080/api/sale/toBePaid/${id}`)
+      await axios.get(`https://mysql-sequalize-sales-app.herokuapp.com/api/sale/toBePaid/${id}`)
       console.log('Updated....')
     } catch (error) {
       console.log(error.response)

@@ -113,7 +113,7 @@ const SaleAddScreen = () => {
     })
 
     try {
-      await axios.post('http://192.168.1.10:8080/api/sale/',{
+      await axios.post('https://mysql-sequalize-sales-app.herokuapp.com/api/sale/',{
         total:addDetails?.total,
         customer_id:addDetails.customer_id,
         salesDate: addDetails.date,
@@ -122,7 +122,7 @@ const SaleAddScreen = () => {
       })
 
       products.forEach(async(item)=>{
-        await axios.post('http://192.168.1.10:8080/api/stock/reduceStock',{
+        await axios.post('https://mysql-sequalize-sales-app.herokuapp.com/api/stock/reduceStock',{
           quantity:item.quantity,
           product_id:item.id
         })

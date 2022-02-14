@@ -37,7 +37,7 @@ const AdminAllScreen = () => {
   const onDelete = async () => {
     const item = admins.filter((admin) => admin.id === selectedItem.id)[0]
     try {
-      await axios.delete(`http://192.168.1.10:8080/api/admin/${item.id}`)
+      await axios.delete(`https://mysql-sequalize-sales-app.herokuapp.com/api/admin/${item.id}`)
       setAdmins(admins.filter((admin) => admin.id !== item.id))
       hideDeleteModal();
       console.log('item deleted')
@@ -49,7 +49,7 @@ const AdminAllScreen = () => {
   const onEdit = async () => {
     const item = admins.filter((admin) => admin.id === selectedItem.id)[0]
     try {
-      const {data} = await axios.put(`http://192.168.1.10:8080/api/admin/${item.id}`,{
+      const {data} = await axios.put(`https://mysql-sequalize-sales-app.herokuapp.com/api/admin/${item.id}`,{
         name:selectedItem.name,
         phone:selectedItem.phone
       })

@@ -30,7 +30,7 @@ const CustomerAddScreen = () => {
 
   const onAdd = async() => {
     try {
-     await axios.post('http://192.168.1.10:8080/api/customer/',{
+     await axios.post('https://mysql-sequalize-sales-app.herokuapp.com/api/customer/',{
         name:addDetails.name,
         phone:addDetails.phone
       })
